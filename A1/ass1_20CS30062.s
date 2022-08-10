@@ -55,9 +55,10 @@ main:   # start of main function
 	call	printf@PLT
 	# call printf function defined in header files
 	leaq	-64(%rbp), %rax
-	# load address of input string(address of str[0]) to rax
-	movq	%rax, %rsi
-	# move address of input string str to rsi(2nd argument to function scanf)
+	# load address of input string(address of str[0]) to raxx	# tmp101, _7
+	movq	-24(%rbp), %rax	# str, tmp102
+	addq	%rdx, %rax	# _7, _8
+# assign1.c:40:               nction scanf)
 	leaq	.LC1(%rip), %rax
 	# load address of string "%s" to rax
 	movq	%rax, %rdi
@@ -79,7 +80,7 @@ main:   # start of main function
 	movl	%eax, %esi
 	# move value of length of string stored in eax to esi(2nd argument to function sort)
 	leaq	.LC2(%rip), %rax
-	# load address of string "Length of the string: %d\n" to rax
+	# load address of sdtring "Length of the string: %d\n" to rax
 	movq	%rax, %rdi
 	# move address of string "Length of the string: %d\n" to rdi(1st argument to function printf)
 	movl	$0, %eax
@@ -87,35 +88,35 @@ main:   # start of main function
 	call	printf@PLT
 	# call printf function defined in header file
 	leaq	-32(%rbp), %rdx
-	# 
+	# load address of empty string dest to rdx(3rd argument to function sort)
 	movl	-68(%rbp), %ecx
-
+	# move value of length of string stored in stack frame 68 bytes before address pointed to by base pointer to ecx
 	leaq	-64(%rbp), %rax
-
+	# load address of input string(address of str[0]) to rax
 	movl	%ecx, %esi
-
+	# move value of length of string stored in ecx to esi(2nd argument to function sort)
 	movq	%rax, %rdi
-
+	# move address of input string to rdi(1st argument to function sort)
 	call	sort
 	# calls sort function defined in source file to sort string alphabetically
 	leaq	-32(%rbp), %rax
-	#
+	# load address of dest string(reverse sorted string) to rax
 	movq	%rax, %rsi
-
+	# move address of reverse sorted string ,dest to rsi(2nd argument to function printf)
 	leaq	.LC3(%rip), %rax
-
+	# load address of string "The string in descending order: %s\n" to rax
 	movq	%rax, %rdi
-
+	# move address of string "The string in descending order: %s\n" to rdi(1st argument to function printf)
 	movl	$0, %eax
-
+	# set value of eax to 0
 	call	printf@PLT
-
+	# call printf function defined in header file
 	movl	$0, %eax
-
+	# set value of eax to 0
 	movq	-8(%rbp), %rdx
-
+	
 	subq	%fs:40, %rdx
-
+	
 	je	.L3
 
 	call	__stack_chk_fail@PLT
@@ -142,24 +143,39 @@ length:
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
+	# move stack pointer to base pointer
 	.cfi_def_cfa_register 6
 	movq	%rdi, -24(%rbp)
+	# move address of input string to stack frame 24 bytes before address pointed to by base pointer
 	movl	$0, -4(%rbp)
+	# set value of 4 bytes before address pointed to by base pointer to 0 for i.the loop iterator
 	jmp	.L5
+	# jump to .L5
 .L6:
 	addl	$1, -4(%rbp)
+	# increment value of 4 bytes before address pointed to by base pointer by 1,i.e,incrementing i by 1
 .L5:
 	movl	-4(%rbp), %eax
+	# move value of 4 bytes before address pointed to by base pointer to eax,i.e,which stores length of string
 	movslq	%eax, %rdx
+	# move value of eax to rdx,i.e,which stores length of string in 64 bit format
 	movq	-24(%rbp), %rax
+	# move address of input string to rax
 	addq	%rdx, %rax
+	# add value of rdx to rax,i.e,which stores address of current character of string
 	movzbl	(%rax), %eax
+	# move value of current character of string to eax
 	testb	%al, %al
+	# test if value of byte stored in address pointed to by rax is 0
 	jne	.L6
+	# if value of byte stored in address pointed to by rax is not 0,then jump to .L6,i.e,not reached end of string so increment i
 	movl	-4(%rbp), %eax
+	# move value of 4 bytes before address pointed to by base pointer to eax,i.e,which stores length of string
 	popq	%rbp
+	# pop base pointer from stack
 	.cfi_def_cfa 7, 8
 	ret
+	# return
 	.cfi_endproc
 .LFE1:
 	.size	length, .-length
@@ -170,18 +186,26 @@ sort:
 	.cfi_startproc
 	endbr64
 	pushq	%rbp
+	# push base pointer to stack frame
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
+	# move stack pointer to base pointer
 	.cfi_def_cfa_register 6
 	subq	$48, %rsp
+	# decrement stack pointer by 48 bytes to make space for variables
 	movq	%rdi, -24(%rbp)
+	# move address of str to stack frame 24 bytes before address pointed to by base pointer
 	movl	%esi, -28(%rbp)
+	# move value of esi  which is length of string to stack frame 28 bytes before address pointed to by base pointer
 	movq	%rdx, -40(%rbp)
+	# moe value of rdx,the destination string to stack frame 40 bytes before address pointed to by base pointer
 	movl	$0, -8(%rbp)
+	# set value of 8 bytes before address pointed to by base pointer to 0 for i,the loop iterator
 	jmp	.L9
 .L13:
 	movl	$0, -4(%rbp)
+	
 	jmp	.L10
 .L12:
 	movl	-8(%rbp), %eax
