@@ -185,6 +185,7 @@ sort:
 .LFB2:
 	.cfi_startproc
 	endbr64
+	# prologue of function
 	pushq	%rbp
 	# push base pointer to stack frame
 	.cfi_def_cfa_offset 16
@@ -197,30 +198,45 @@ sort:
 	movq	%rdi, -24(%rbp)
 	# move address of str to stack frame 24 bytes before address pointed to by base pointer
 	movl	%esi, -28(%rbp)
-	# move value of esi  which is length of string to stack frame 28 bytes before address pointed to by base pointer
+	# move value of esi  which is length of string (4 bytes) to stack frame 28 bytes before address pointed to by base pointer
 	movq	%rdx, -40(%rbp)
-	# moe value of rdx,the destination string to stack frame 40 bytes before address pointed to by base pointer
+	# move value of rdx,the address of destination string dest to stack frame 40 bytes before address pointed to by base pointer
 	movl	$0, -8(%rbp)
 	# set value of 8 bytes before address pointed to by base pointer to 0 for i,the loop iterator
 	jmp	.L9
+	# jump to .L9
 .L13:
 	movl	$0, -4(%rbp)
-	
+	# set value of 4 bytes before address pointed to by base pointer to 0 i.e,initialise j,the inner loop iterator
 	jmp	.L10
+	# jump to .L10
 .L12:
 	movl	-8(%rbp), %eax
+	# move long value at 8 bytes before address pointed to by base pointer to eax,i.e,the value of i
 	movslq	%eax, %rdx
+	# move value of eax to rdx,i.e,the value of i is stored in 64 bit format
 	movq	-24(%rbp), %rax
+	# move address of str to rax
 	addq	%rdx, %rax
+	# add value of rdx to rax,i.e,the address of str[i] is stored in rax
 	movzbl	(%rax), %edx
+	# move value of str[i] to edx
 	movl	-4(%rbp), %eax
+	# move value of 4 bytes before address pointed to by base pointer to eax,i.e,the value of j,the inner loop iterator
 	movslq	%eax, %rcx
+	# move value of eax to rcx,i.e,the value of j is stored in 64 bit format
 	movq	-24(%rbp), %rax
+	# move address of str to rax
 	addq	%rcx, %rax
+	# add value of rcx to rax,i.e,the address of str[j] is stored in rax
 	movzbl	(%rax), %eax
+	# move value of str[j] to eax
 	cmpb	%al, %dl
+	# compare value of byte stored in address pointed to by rax with value of byte stored in address pointed to by rdx,i.e,str[i] and str[j]
 	jge	.L11
+	# if str[i]>str[j] do nothing and jump to L11
 	movl	-8(%rbp), %eax
+	# move value of 8 bytes before address pointed to by base pointer to eax,i.e,the value of i
 	movslq	%eax, %rdx
 	movq	-24(%rbp), %rax
 	addq	%rdx, %rax
@@ -246,24 +262,41 @@ sort:
 	addl	$1, -4(%rbp)
 .L10:
 	movl	-4(%rbp), %eax
+	# move value of 4 bytes before address pointed to by base pointer to eax,i.e,j,the inner loop iterator
 	cmpl	-28(%rbp), %eax
+	# compare length of string 28 bytes before address pointed to by base pointer to value of j,the inner loop iterator
 	jl	.L12
+	#jump to .L12 if j < len of string	
 	addl	$1, -8(%rbp)
+	# add 1 to value of 8 bytes before address pointed to by base pointer,i.e,increment j by 1
 .L9:
 	movl	-8(%rbp), %eax
+	# move value of a word 8 bytes before address pointed to by base pointer to eax,the variable i which is the loop iterator
 	cmpl	-28(%rbp), %eax
+	# comparing two words ,i and the length of string ,length stored 28 bytes before address pointed to by base pointer
 	jl	.L13
+	# jump  to L13 if i less than length of string 
 	movq	-40(%rbp), %rdx
+	# move the address of destination string dest to rdx(3rd argument of reverse function)
 	movl	-28(%rbp), %ecx
+	# move the length of string (4 bytes) to ecx
 	movq	-24(%rbp), %rax
+	# move the address of string str to rax
 	movl	%ecx, %esi
+	# move the length of string to esi(4 bytes) (2nd argument of reverse function)
 	movq	%rax, %rdi
+	# move the address of string str to rdi(1st argument of reverse function)
 	call	reverse
+	# call reverse function to reverse the string
 	nop
+	# 
 	leave
+	# leave function
 	.cfi_def_cfa 7, 8
 	ret
+	# return from function
 	.cfi_endproc
+	#
 .LFE2:
 	.size	sort, .-sort
 	.globl	reverse
@@ -278,13 +311,20 @@ reverse:
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
 	movq	%rdi, -24(%rbp)
+	# move the address of string str in rdi to 24 bytes before address pointed to by base pointer
 	movl	%esi, -28(%rbp)
+	# move the length of string in esi(4 bytes) to 28 bytes before address pointed to by base pointer
 	movq	%rdx, -40(%rbp)
+	# move the address of destination string in rdx to 40 bytes before address pointed to by base pointer
 	movl	$0, -8(%rbp)
+	# move 0(4 bytes) to 8 bytes before address pointed to by base pointer,i.e,initialize i to 0
 	jmp	.L15
+	# jump to L15
 .L20:
 	movl	-28(%rbp), %eax
+	# move the length of string(4 bytes)to eax
 	subl	-8(%rbp), %eax
+	#
 	subl	$1, %eax
 	movl	%eax, -4(%rbp)
 	nop
@@ -327,14 +367,22 @@ reverse:
 	addl	$1, -8(%rbp)
 .L15:
 	movl	-28(%rbp), %eax
+	# move the length of string(4 bytes) to eax
 	movl	%eax, %edx
+	# move the length of string in eax to edx(4 bytes)
 	shrl	$31, %edx
+	# divide length of string by 2
 	addl	%edx, %eax
+	# add
 	sarl	%eax
 	cmpl	%eax, -8(%rbp)
+	# compare half the length of string to value of i,the loop iterator
 	jl	.L20
+	# jump to L20 if i < half the length of string
 	movl	$0, -8(%rbp)
+	# move 0(4 bytes) to 8 bytes before address pointed to by base pointer,i.e,initialize i to 0
 	jmp	.L21
+	# jump to L21 on exiting outer loop
 .L22:
 	movl	-8(%rbp), %eax
 	movslq	%eax, %rdx
