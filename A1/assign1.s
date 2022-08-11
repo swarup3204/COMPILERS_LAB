@@ -1,9 +1,4 @@
 	.file	"assign1.c"
-# GNU C17 (Ubuntu 11.2.0-19ubuntu1) version 11.2.0 (x86_64-linux-gnu)
-#	compiled by GNU C version 11.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
-
-# GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-# options passed: -mtune=generic -march=x86-64 -fasynchronous-unwind-tables -fstack-protector-strong -fstack-clash-protection -fcf-protection
 	.text
 	.section	.rodata
 	.align 8
@@ -22,64 +17,57 @@
 main:
 .LFB0:
 	.cfi_startproc
-	endbr64	
-	pushq	%rbp	#
+	endbr64
+	pushq	%rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp	#,
+	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$80, %rsp	#,
-# assign1.c:10: {
-	movq	%fs:40, %rax	# MEM[(<address-space-1> long unsigned int *)40B], tmp97
-	movq	%rax, -8(%rbp)	# tmp97, D.2417
-	xorl	%eax, %eax	# tmp97
-# assign1.c:13:     printf("Enter the string (all lowrer case): ");
-	leaq	.LC0(%rip), %rax	#, tmp84
-	movq	%rax, %rdi	# tmp95,
-	movl	$0, %eax	#,
-	call	printf@PLT	#
-	movq	%rax, %rsi	# tmp85,
-	leaq	.LC1(%rip), %rax	#, tmp86
-	movq	%rax, %rdi	# tmp86,
-	movl	$0, %eax	#,
-	call	__isoc99_scanf@PLT	#
-# assign1.c:15:     len = length(str); // calling length function
-	leaq	-64(%rbp), %rax	#, tmp87
-	movq	%rax, %rdi	# tmp87,
-	call	length	#
-	movl	%eax, -68(%rbp)	# tmp88, len
-# assign1.c:16:     printf("Length of the string: %d\n", len);
-	movl	-68(%rbp), %eax	# len, tmp89
-	movl	%eax, %esi	# tmp89,
-	leaq	.LC2(%rip), %rax	#, tmp90
-	movq	%rax, %rdi	# tmp90,
-	movl	$0, %eax	#,
-	call	printf@PLT	#
-# assign1.c:17:     sort(str, len, dest); // calling sorting function
-	leaq	-32(%rbp), %rdx	#, tmp91
-	movl	-68(%rbp), %ecx	# len, tmp92
-	leaq	-64(%rbp), %rax	#, tmp93
-	movl	%ecx, %esi	# tmp92,
-	movq	%rax, %rdi	# tmp93,
-	call	sort	#
-# assign1.c:18:     printf("The string in descending order: %s\n", dest);
-	leaq	-32(%rbp), %rax	#, tmp94
-	movq	%rax, %rsi	# tmp94,
-	leaq	.LC3(%rip), %rax	#, tmp95
-	movq	%rax, %rdi	# tmp95,
-	movl	$0, %eax	#,
-	call	printf@PLT	#
-# assign1.c:19:     return 0;
-	movl	$0, %eax	#, _9
-# assign1.c:20: }
-	movq	-8(%rbp), %rdx	# D.2417, tmp98
-	subq	%fs:40, %rdx	# MEM[(<address-space-1> long unsigned int *)40B], tmp98
-	je	.L3	#,
-	call	__stack_chk_fail@PLT	#
+	subq	$80, %rsp
+	movq	%fs:40, %rax
+	movq	%rax, -8(%rbp)
+	xorl	%eax, %eax
+	leaq	.LC0(%rip), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	leaq	-64(%rbp), %rax
+	movq	%rax, %rsi
+	leaq	.LC1(%rip), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	__isoc99_scanf@PLT
+	leaq	-64(%rbp), %rax
+	movq	%rax, %rdi
+	call	length
+	movl	%eax, -68(%rbp)
+	movl	-68(%rbp), %eax
+	movl	%eax, %esi
+	leaq	.LC2(%rip), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	leaq	-32(%rbp), %rdx
+	movl	-68(%rbp), %ecx
+	leaq	-64(%rbp), %rax
+	movl	%ecx, %esi
+	movq	%rax, %rdi
+	call	sort
+	leaq	-32(%rbp), %rax
+	movq	%rax, %rsi
+	leaq	.LC3(%rip), %rax
+	movq	%rax, %rdi
+	movl	$0, %eax
+	call	printf@PLT
+	movl	$0, %eax
+	movq	-8(%rbp), %rdx
+	subq	%fs:40, %rdx
+	je	.L3
+	call	__stack_chk_fail@PLT
 .L3:
-	leave	
+	leave
 	.cfi_def_cfa 7, 8
-	ret	
+	ret
 	.cfi_endproc
 .LFE0:
 	.size	main, .-main
@@ -88,36 +76,29 @@ main:
 length:
 .LFB1:
 	.cfi_startproc
-	endbr64	
-	pushq	%rbp	#
+	endbr64
+	pushq	%rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp	#,
+	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	movq	%rdi, -24(%rbp)	# str, str
-# assign1.c:24:     for (i = 0; str[i] != '\0'; i++) // computing length of the string
-	movl	$0, -4(%rbp)	#, i
-# assign1.c:24:     for (i = 0; str[i] != '\0'; i++) // computing length of the string
-	jmp	.L5	#
+	movq	%rdi, -24(%rbp)
+	movl	$0, -4(%rbp)
+	jmp	.L5
 .L6:
-# assign1.c:24:     for (i = 0; str[i] != '\0'; i++) // computing length of the string
-	addl	$1, -4(%rbp)	#, i
+	addl	$1, -4(%rbp)
 .L5:
-# assign1.c:24:     for (i = 0; str[i] != '\0'; i++) // computing length of the string
-	movl	-4(%rbp), %eax	# i, tmp87
-	movslq	%eax, %rdx	# tmp87, _1
-	movq	-24(%rbp), %rax	# str, tmp88
-	addq	%rdx, %rax	# _1, _2
-	movzbl	(%rax), %eax	# *_2, _3
-# assign1.c:24:     for (i = 0; str[i] != '\0'; i++) // computing length of the string
-	testb	%al, %al	# _3
-	jne	.L6	#,
-# assign1.c:28:     return i;
-	movl	-4(%rbp), %eax	# i, _8
-# assign1.c:29: }
-	popq	%rbp	#
+	movl	-4(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movzbl	(%rax), %eax
+	testb	%al, %al
+	jne	.L6
+	movl	-4(%rbp), %eax
+	popq	%rbp
 	.cfi_def_cfa 7, 8
-	ret	
+	ret
 	.cfi_endproc
 .LFE1:
 	.size	length, .-length
@@ -126,98 +107,77 @@ length:
 sort:
 .LFB2:
 	.cfi_startproc
-	endbr64	
-	pushq	%rbp	#
+	endbr64
+	pushq	%rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp	#,
+	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	subq	$48, %rsp	#,
-	movq	%rdi, -24(%rbp)	# str, str
-	movl	%esi, -28(%rbp)	# len, len
-	movq	%rdx, -40(%rbp)	# dest, dest
-# assign1.c:34:     for (i = 0; i < len; i++)
-	movl	$0, -8(%rbp)	#, i
-# assign1.c:34:     for (i = 0; i < len; i++)
-	jmp	.L9	#
+	subq	$48, %rsp
+	movq	%rdi, -24(%rbp)
+	movl	%esi, -28(%rbp)
+	movq	%rdx, -40(%rbp)
+	movl	$0, -8(%rbp)
+	jmp	.L9
 .L13:
-# assign1.c:36:         for (j = 0; j < len; j++)
-	movl	$0, -4(%rbp)	#, j
-# assign1.c:36:         for (j = 0; j < len; j++)
-	jmp	.L10	#
+	movl	$0, -4(%rbp)
+	jmp	.L10
 .L12:
-# assign1.c:38:             if (str[i] < str[j]) // sorting in ascending order
-	movl	-8(%rbp), %eax	# i, tmp97
-	movslq	%eax, %rdx	# tmp97, _1
-	movq	-24(%rbp), %rax	# str, tmp98
-	addq	%rdx, %rax	# _1, _2
-	movzbl	(%rax), %edx	# *_2, _3
-# assign1.c:38:             if (str[i] < str[j]) // sorting in ascending order
-	movl	-4(%rbp), %eax	# j, tmp99
-	movslq	%eax, %rcx	# tmp99, _4
-	movq	-24(%rbp), %rax	# str, tmp100
-	addq	%rcx, %rax	# _4, _5
-	movzbl	(%rax), %eax	# *_5, _6
-# assign1.c:38:             if (str[i] < str[j]) // sorting in ascending order
-	cmpb	%al, %dl	# _6, _3
-	jge	.L11	#,
-# assign1.c:40:                 temp = str[i];
-	movl	-8(%rbp), %eax	# i, tmp101
-	movslq	%eax, %rdx	# tmp101, _7
-	movq	-24(%rbp), %rax	# str, tmp102
-	addq	%rdx, %rax	# _7, _8
-# assign1.c:40:                 temp = str[i];
-	movzbl	(%rax), %eax	# *_8, tmp103
-	movb	%al, -9(%rbp)	# tmp103, temp
-# assign1.c:41:                 str[i] = str[j];
-	movl	-4(%rbp), %eax	# j, tmp104
-	movslq	%eax, %rdx	# tmp104, _9
-	movq	-24(%rbp), %rax	# str, tmp105
-	addq	%rdx, %rax	# _9, _10
-# assign1.c:41:                 str[i] = str[j];
-	movl	-8(%rbp), %edx	# i, tmp106
-	movslq	%edx, %rcx	# tmp106, _11
-	movq	-24(%rbp), %rdx	# str, tmp107
-	addq	%rcx, %rdx	# _11, _12
-# assign1.c:41:                 str[i] = str[j];
-	movzbl	(%rax), %eax	# *_10, _13
-# assign1.c:41:                 str[i] = str[j];
-	movb	%al, (%rdx)	# _13, *_12
-# assign1.c:42:                 str[j] = temp;
-	movl	-4(%rbp), %eax	# j, tmp108
-	movslq	%eax, %rdx	# tmp108, _14
-	movq	-24(%rbp), %rax	# str, tmp109
-	addq	%rax, %rdx	# tmp109, _15
-# assign1.c:42:                 str[j] = temp;
-	movzbl	-9(%rbp), %eax	# temp, tmp110
-	movb	%al, (%rdx)	# tmp110, *_15
+	movl	-8(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movzbl	(%rax), %edx
+	movl	-4(%rbp), %eax
+	movslq	%eax, %rcx
+	movq	-24(%rbp), %rax
+	addq	%rcx, %rax
+	movzbl	(%rax), %eax
+	cmpb	%al, %dl
+	jge	.L11
+	movl	-8(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movzbl	(%rax), %eax
+	movb	%al, -9(%rbp)
+	movl	-4(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	-8(%rbp), %edx
+	movslq	%edx, %rcx
+	movq	-24(%rbp), %rdx
+	addq	%rcx, %rdx
+	movzbl	(%rax), %eax
+	movb	%al, (%rdx)
+	movl	-4(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-24(%rbp), %rax
+	addq	%rax, %rdx
+	movzbl	-9(%rbp), %eax
+	movb	%al, (%rdx)
 .L11:
-# assign1.c:36:         for (j = 0; j < len; j++)
-	addl	$1, -4(%rbp)	#, j
+	addl	$1, -4(%rbp)
 .L10:
-# assign1.c:36:         for (j = 0; j < len; j++)
-	movl	-4(%rbp), %eax	# j, tmp111
-	cmpl	-28(%rbp), %eax	# len, tmp111
-	jl	.L12	#,
-# assign1.c:34:     for (i = 0; i < len; i++)
-	addl	$1, -8(%rbp)	#, i
+	movl	-4(%rbp), %eax
+	cmpl	-28(%rbp), %eax
+	jl	.L12
+	addl	$1, -8(%rbp)
 .L9:
-# assign1.c:34:     for (i = 0; i < len; i++)
-	movl	-8(%rbp), %eax	# i, tmp112
-	cmpl	-28(%rbp), %eax	# len, tmp112
-	jl	.L13	#,
-# assign1.c:47:     reverse(str, len, dest);
-	movq	-40(%rbp), %rdx	# dest, tmp113
-	movl	-28(%rbp), %ecx	# len, tmp114
-	movq	-24(%rbp), %rax	# str, tmp115
-	movl	%ecx, %esi	# tmp114,
-	movq	%rax, %rdi	# tmp115,
-	call	reverse	#
-# assign1.c:48: }
-	nop	
-	leave	
+	movl	-8(%rbp), %eax
+	cmpl	-28(%rbp), %eax
+	jl	.L13
+	movq	-40(%rbp), %rdx
+	movl	-28(%rbp), %ecx
+	movq	-24(%rbp), %rax
+	movl	%ecx, %esi
+	movq	%rax, %rdi
+	call	reverse
+	nop
+	leave
 	.cfi_def_cfa 7, 8
-	ret	
+	ret
 	.cfi_endproc
 .LFE2:
 	.size	sort, .-sort
@@ -226,121 +186,91 @@ sort:
 reverse:
 .LFB3:
 	.cfi_startproc
-	endbr64	
-	pushq	%rbp	#
+	endbr64
+	pushq	%rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp	#,
+	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	movq	%rdi, -24(%rbp)	# str, str
-	movl	%esi, -28(%rbp)	# len, len
-	movq	%rdx, -40(%rbp)	# dest, dest
-# assign1.c:53:     for (i = 0; i < len / 2; i++)
-	movl	$0, -8(%rbp)	#, i
-# assign1.c:53:     for (i = 0; i < len / 2; i++)
-	jmp	.L15	#
+	movq	%rdi, -24(%rbp)
+	movl	%esi, -28(%rbp)
+	movq	%rdx, -40(%rbp)
+	movl	$0, -8(%rbp)
+	jmp	.L15
 .L20:
-# assign1.c:55:         for (j = len - i - 1; j >= len / 2; j--) // reversing the string
-	movl	-28(%rbp), %eax	# len, tmp99
-	subl	-8(%rbp), %eax	# i, _1
-# assign1.c:55:         for (j = len - i - 1; j >= len / 2; j--) // reversing the string
-	subl	$1, %eax	#, tmp100
-	movl	%eax, -4(%rbp)	# tmp100, j
-# assign1.c:55:         for (j = len - i - 1; j >= len / 2; j--) // reversing the string
-	nop	
-# assign1.c:55:         for (j = len - i - 1; j >= len / 2; j--) // reversing the string
-	movl	-28(%rbp), %eax	# len, tmp112
-	movl	%eax, %edx	# tmp112, tmp113
-	shrl	$31, %edx	#, tmp113
-	addl	%edx, %eax	# tmp113, tmp114
-	sarl	%eax	# tmp115
-# assign1.c:55:         for (j = len - i - 1; j >= len / 2; j--) // reversing the string
-	cmpl	%eax, -4(%rbp)	# _11, j
-	jl	.L18	#,
-# assign1.c:57:             if (i == j)
-	movl	-8(%rbp), %eax	# i, tmp101
-	cmpl	-4(%rbp), %eax	# j, tmp101
-	je	.L23	#,
-# assign1.c:61:                 temp = str[i];
-	movl	-8(%rbp), %eax	# i, tmp102
-	movslq	%eax, %rdx	# tmp102, _2
-	movq	-24(%rbp), %rax	# str, tmp103
-	addq	%rdx, %rax	# _2, _3
-# assign1.c:61:                 temp = str[i];
-	movzbl	(%rax), %eax	# *_3, tmp104
-	movb	%al, -9(%rbp)	# tmp104, temp
-# assign1.c:62:                 str[i] = str[j];
-	movl	-4(%rbp), %eax	# j, tmp105
-	movslq	%eax, %rdx	# tmp105, _4
-	movq	-24(%rbp), %rax	# str, tmp106
-	addq	%rdx, %rax	# _4, _5
-# assign1.c:62:                 str[i] = str[j];
-	movl	-8(%rbp), %edx	# i, tmp107
-	movslq	%edx, %rcx	# tmp107, _6
-	movq	-24(%rbp), %rdx	# str, tmp108
-	addq	%rcx, %rdx	# _6, _7
-# assign1.c:62:                 str[i] = str[j];
-	movzbl	(%rax), %eax	# *_5, _8
-# assign1.c:62:                 str[i] = str[j];
-	movb	%al, (%rdx)	# _8, *_7
-# assign1.c:63:                 str[j] = temp;
-	movl	-4(%rbp), %eax	# j, tmp109
-	movslq	%eax, %rdx	# tmp109, _9
-	movq	-24(%rbp), %rax	# str, tmp110
-	addq	%rax, %rdx	# tmp110, _10
-# assign1.c:63:                 str[j] = temp;
-	movzbl	-9(%rbp), %eax	# temp, tmp111
-	movb	%al, (%rdx)	# tmp111, *_10
-# assign1.c:64:                 break;
-	jmp	.L18	#
+	movl	-28(%rbp), %eax
+	subl	-8(%rbp), %eax
+	subl	$1, %eax
+	movl	%eax, -4(%rbp)
+	nop
+	movl	-28(%rbp), %eax
+	movl	%eax, %edx
+	shrl	$31, %edx
+	addl	%edx, %eax
+	sarl	%eax
+	cmpl	%eax, -4(%rbp)
+	jl	.L18
+	movl	-8(%rbp), %eax
+	cmpl	-4(%rbp), %eax
+	je	.L23
+	movl	-8(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movzbl	(%rax), %eax
+	movb	%al, -9(%rbp)
+	movl	-4(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	-8(%rbp), %edx
+	movslq	%edx, %rcx
+	movq	-24(%rbp), %rdx
+	addq	%rcx, %rdx
+	movzbl	(%rax), %eax
+	movb	%al, (%rdx)
+	movl	-4(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-24(%rbp), %rax
+	addq	%rax, %rdx
+	movzbl	-9(%rbp), %eax
+	movb	%al, (%rdx)
+	jmp	.L18
 .L23:
-# assign1.c:58:                 break;
-	nop	
+	nop
 .L18:
-# assign1.c:53:     for (i = 0; i < len / 2; i++)
-	addl	$1, -8(%rbp)	#, i
+	addl	$1, -8(%rbp)
 .L15:
-# assign1.c:53:     for (i = 0; i < len / 2; i++)
-	movl	-28(%rbp), %eax	# len, tmp116
-	movl	%eax, %edx	# tmp116, tmp117
-	shrl	$31, %edx	#, tmp117
-	addl	%edx, %eax	# tmp117, tmp118
-	sarl	%eax	# tmp119
-# assign1.c:53:     for (i = 0; i < len / 2; i++)
-	cmpl	%eax, -8(%rbp)	# _12, i
-	jl	.L20	#,
-# assign1.c:68:     for (i = 0; i < len; i++)
-	movl	$0, -8(%rbp)	#, i
-# assign1.c:68:     for (i = 0; i < len; i++)
-	jmp	.L21	#
+	movl	-28(%rbp), %eax
+	movl	%eax, %edx
+	shrl	$31, %edx
+	addl	%edx, %eax
+	sarl	%eax
+	cmpl	%eax, -8(%rbp)
+	jl	.L20
+	movl	$0, -8(%rbp)
+	jmp	.L21
 .L22:
-# assign1.c:69:         dest[i] = str[i];
-	movl	-8(%rbp), %eax	# i, tmp120
-	movslq	%eax, %rdx	# tmp120, _13
-	movq	-24(%rbp), %rax	# str, tmp121
-	addq	%rdx, %rax	# _13, _14
-# assign1.c:69:         dest[i] = str[i];
-	movl	-8(%rbp), %edx	# i, tmp122
-	movslq	%edx, %rcx	# tmp122, _15
-	movq	-40(%rbp), %rdx	# dest, tmp123
-	addq	%rcx, %rdx	# _15, _16
-# assign1.c:69:         dest[i] = str[i];
-	movzbl	(%rax), %eax	# *_14, _17
-# assign1.c:69:         dest[i] = str[i];
-	movb	%al, (%rdx)	# _17, *_16
-# assign1.c:68:     for (i = 0; i < len; i++)
-	addl	$1, -8(%rbp)	#, i
+	movl	-8(%rbp), %eax
+	movslq	%eax, %rdx
+	movq	-24(%rbp), %rax
+	addq	%rdx, %rax
+	movl	-8(%rbp), %edx
+	movslq	%edx, %rcx
+	movq	-40(%rbp), %rdx
+	addq	%rcx, %rdx
+	movzbl	(%rax), %eax
+	movb	%al, (%rdx)
+	addl	$1, -8(%rbp)
 .L21:
-# assign1.c:68:     for (i = 0; i < len; i++)
-	movl	-8(%rbp), %eax	# i, tmp124
-	cmpl	-28(%rbp), %eax	# len, tmp124
-	jl	.L22	#,
-# assign1.c:70: }
-	nop	
-	nop	
-	popq	%rbp	#
+	movl	-8(%rbp), %eax
+	cmpl	-28(%rbp), %eax
+	jl	.L22
+	nop
+	nop
+	popq	%rbp
 	.cfi_def_cfa 7, 8
-	ret	
+	ret
 	.cfi_endproc
 .LFE3:
 	.size	reverse, .-reverse
