@@ -271,9 +271,9 @@ sort:
 	# add 1 to value of 8 bytes before address pointed to by base pointer,i.e,increment j by 1
 .L9:
 	movl	-8(%rbp), %eax
-	# move value of a word 8 bytes before address pointed to by base pointer to eax,the variable i which is the loop iterator
+	# move value of a double word 8 bytes before address pointed to by base pointer to eax,the variable i which is the loop iterator
 	cmpl	-28(%rbp), %eax
-	# comparing two words ,i and the length of string ,length stored 28 bytes before address pointed to by base pointer
+	# comparing two double words ,i and the length of string ,length stored 28 bytes before address pointed to by base pointer
 	jl	.L13
 	# jump  to L13 if i less than length of string 
 	movq	-40(%rbp), %rdx
@@ -289,7 +289,7 @@ sort:
 	call	reverse
 	# call reverse function to reverse the string
 	nop
-	# 
+	# no operation
 	leave
 	# leave function
 	.cfi_def_cfa 7, 8
@@ -305,6 +305,7 @@ reverse:
 .LFB3:
 	.cfi_startproc
 	endbr64
+	# prologue of function
 	pushq	%rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
@@ -321,21 +322,35 @@ reverse:
 	jmp	.L15
 	# jump to L15
 .L20:
-	movl	-28(%rbp), %eax
-	# move the length of string(4 bytes)to eax
-	subl	-8(%rbp), %eax
-	#
-	subl	$1, %eax
-	movl	%eax, -4(%rbp)
+	movl	-28(%rbp), %eax 				# eax <--- len
+	# move value of len(double word)to eax
+	subl	-8(%rbp), %eax 					# eax <--- len-i
+	# subtract the value of i from length of string(4 bytes),i.e,j=len-i
+	subl	$1, %eax					    # eax <--- eax-1
+	# subtract 1 (of size double word) from eax
+	movl	%eax, -4(%rbp)					# j <--- eax
+	# move the value in eax=len-i-1 to j
 	nop
-	movl	-28(%rbp), %eax
-	movl	%eax, %edx
-	shrl	$31, %edx
-	addl	%edx, %eax
+	# no operation
+	movl	-28(%rbp), %eax					# eax <--- M[rbp-28],eax <--- len
+	# move value of len(double word) to eax
+	movl	%eax, %edx   					# edx <--- eax, edx 
+	# move value of eax to edx
+
+	# algorithm for dividing number by 2(any number whether positive,negative or zero)
+
+	shrl	$31, %edx						# edx <--- edx/(2^31)
+	# shift right edx by 31 bits
+	addl	%edx, %eax						# eax <--- eax+edx
+	# add edx to eax
 	sarl	%eax
-	cmpl	%eax, -4(%rbp)
-	jl	.L18
-	movl	-8(%rbp), %eax
+	# shift arithmetically right the value in eax and fill msb with original value 
+	cmpl	%eax, -4(%rbp)					
+	# compare  len/2 and j
+	jl	.L18								# if j < len/2 exit inner loop
+	# jump to .L18
+	movl	-8(%rbp), %eax					# 
+	# move the value of i to eax
 	cmpl	-4(%rbp), %eax
 	je	.L23
 	movl	-8(%rbp), %eax
@@ -363,8 +378,10 @@ reverse:
 	jmp	.L18
 .L23:
 	nop
+	# no operation
 .L18:
-	addl	$1, -8(%rbp)
+	addl	$1, -8(%rbp)   					# i <--- i+1
+	# add 1 to value at address 8 bytes before rbp,i.e,i 
 .L15:
 	movl	-28(%rbp), %eax
 	# move the length of string(4 bytes) to eax
