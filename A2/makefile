@@ -22,4 +22,4 @@ readInt.o:myl.h readInt.c
 libIO.a:printFlt.o printInt.o printStr.o readFlt.o readInt.o
 		ar -rcs libIO.a printFlt.o printInt.o printStr.o readFlt.o readInt.o
 clean:
-		rm a.out mainIO.o libIO.a printInt.o printStr.o printFlt.o readFlt.o readInt.o
+		rm mainIO.o libIO.a printInt.o printStr.o printFlt.o readFlt.o readInt.o

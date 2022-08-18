@@ -1,10 +1,13 @@
 #include "myl.h"
-#define BUFF 20 // BUFF different for each
+#define BUFF 10
+// keeping buff size max 10 to prevent overflow
 
 int readFlt(float *f)
 {
     char input[BUFF];
     int len;
+    // len stores total length of input
+    /* calls READ function to read from STDIN*/
     __asm__ __volatile__(
         "movl $0, %%eax \n\t"
         "movq $0, %%rdi \n\t"
@@ -12,7 +15,7 @@ int readFlt(float *f)
         : "=a"(len)
         : "S"(input), "d"(BUFF));
 
-    if (len < 0)
+    if (len < 0 || len > BUFF)
         return ERR;
     // in stores the float value as a string
     int i = 0;
@@ -45,14 +48,3 @@ int readFlt(float *f)
     *f = sign * (bd + ad);
     return OK;
 }
-// comment out if not needed
-
-// int main()
-// {
-//     float f;
-//     int ret = readFlt(&f);
-//     if (ret == OK)
-//         printf("The entered value is %f\n", f);
-//     else
-//         printf("Error\n");
-// }

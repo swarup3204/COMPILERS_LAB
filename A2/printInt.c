@@ -1,5 +1,5 @@
 #include "myl.h"
-#define BUFF 20
+#define BUFF 10  /* to limit size of output string to 10 characters*/
 int printInt(int n)
 {
     char buff[BUFF], zero = '0';
@@ -14,6 +14,7 @@ int printInt(int n)
             buff[i++] = '-';
             n *= -1;
         }
+        // extracting number and converting to string
         while (n)
         {
             buff[i++] = n % 10 + '0';

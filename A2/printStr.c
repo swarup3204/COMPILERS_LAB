@@ -1,5 +1,6 @@
 #include "myl.h"
-#define BUFF 20
+#define BUFF 40
+/* to limit size of output string printed to 40 characters*/
 
 int printStr(char *str)
 {
@@ -26,15 +27,3 @@ int printStr(char *str)
     return bytes;
 }
 
-// comment out if not needed
-// #include <stdio.h>
-
-// int main()
-// {
-//     char *str="HI boi I am";
-//     int ret = printStr(str);
-//     if (ret == ERR)
-//         printf("FAILURE\n");
-//     else
-//         printf("The number of characters printed = %d\n",ret);
-// }

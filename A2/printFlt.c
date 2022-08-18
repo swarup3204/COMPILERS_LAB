@@ -1,13 +1,20 @@
 #include "myl.h"
-#define BUFF 20
+#define BUFF 10 /*to limit size of output to 10 characters*/
 #define EPS 1e-6
-
+/*EPS to check conditon to
+terminate adding decimal values if they are close enough to 0*/
 int printFlt(float f)
 {
     char buff[BUFF], zero = '0';
+    // buff stores the resultant string from float
     int i = 0, j, k, bytes;
     if (f == 0)
+    {
         buff[i++] = zero;
+        buff[i++] = '.';
+        buff[i++] = zero;
+        buff[i]= '\n';
+    }
     // bd <-- before decimal part of f
     // ad <-- after decimal part of f
     else
@@ -19,6 +26,7 @@ int printFlt(float f)
         }
         int bd = (int)f;
         float ad = f - bd;
+        // extracting part before decimal
         while (bd)
         {
             buff[i++] = bd % 10 + '0';
@@ -38,10 +46,11 @@ int printFlt(float f)
             buff[j++] = buff[k];
             buff[k--] = temp;
         }
-        buff[i++] = '.';
+        buff[i++] = '.'; // adding decimal point
         if (i >= BUFF)
             return ERR;
         j = 0;
+        // extracting part after decimal point upto 6 digits
         while ((ad >= EPS || ad <= -EPS) && j < 6)
         {
             ad *= 10;
@@ -52,10 +61,12 @@ int printFlt(float f)
             j++;
         }
     }
-    buff[i] = '\n';
+    if (buff[i - 1] == '.') // if nothing after decimal point,add a 0
+        buff[i++] = '0';
+    buff[i] = '\n'; // add linefeed at end of string
     bytes = i + 1;
-    // printf("%s\n".buff);
     // The __volatile__ modifier on an __asm__ block forces the compiler's optimizer to execute the code as-is. Without it, the optimizer may think it can be either removed outright, or lifted out of a loop and cached.
+    // calls function write to write to stdout
     __asm__ __volatile__(
         "movl $1, %%eax\n\t"
         "movq $1, %%rdi\n\t"
@@ -64,18 +75,5 @@ int printFlt(float f)
         : "S"(buff), "d"(bytes));
 
     return bytes;
+    // returns number of characters on successful execution
 }
-// returns failure if size passed greater than BUFF
-// comment out if not needed
-
-// #include <stdio.h>
-
-// int main()
-// {
-//     float x = -2.987691;
-//     int ret = printFlt(x);
-//     if (ret == ERR)
-//         printf("FAILURE\n");
-//     else
-//         printf("The numbers of characters printed = %d\n",ret);
-// }
