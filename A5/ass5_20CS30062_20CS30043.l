@@ -1,8 +1,7 @@
 %{
-
 #include <stdio.h>
-#include "ass4_20CS30062_20CS30043.tab.h"
-extern YYSTYPE yylval;
+#include "ass5_20CS30062_20CS30043_translator.h"
+#include "ass5_20CS30062_20CS30043.tab.h"
 %}
 %option noyywrap
 %option yylineno
@@ -77,11 +76,27 @@ ws                      [ \t]
 "break"                 {yylval.stringval=strdup(yytext);return BREAK;}
 "return"                {yylval.stringval=strdup(yytext);return RETURN;}
 
-{identifier}            {yylval.stringval=strdup(yytext);return IDENTIFIER;}
-{integer-constant}      {yylval.intval=atoi(yytext);return INT_CONSTANT;}
-{floating-constant}     {yylval.doubleval=atof(yytext);return FLOAT_CONSTANT;}
-{character-constant}    {yylval.charval=yytext[0];;return CHAR_CONSTANT;}
-{string-literal}        {yylval.stringval=strdup(yytext);return STRING_LITERAL;}
+{identifier}            { 
+                            yylval.stringval=strdup(yytext);
+                            yylval.sym_entry=present_symbol_table->lookup(yytext);
+                            return IDENTIFIER;
+                        }
+{integer-constant}      {
+                            yylval.intval=atoi(yytext);
+                            return INT_CONSTANT;
+                        }
+{floating-constant}     {
+                            yylval.floatval=atof(yytext);
+                            return FLOAT_CONSTANT;
+                        }
+{character-constant}    {
+                            yylval.charval=yytext[0];
+                            return CHAR_CONSTANT;
+                        }
+{string-literal}        {
+                            yylval.stringval=strdup(yytext);
+                            return STRING_LITERAL;
+                        }
 
 "["                     {yylval.stringval=strdup(yytext);return LEFT_SQUARE_BRACKET;}
 "]"                     {yylval.stringval=strdup(yytext);return RIGHT_SQUARE_BRACKET;}
@@ -133,19 +148,16 @@ ws                      [ \t]
 "/*"                               {BEGIN(multi_line_comment);}
 <multi_line_comment>[^*\n]*        {}
 <multi_line_comment>"*"+[^*/\n]*   {}
-<multi_line_comment>\n             {printf("Parsing line number %d:\n\n", yylineno);}
+<multi_line_comment>\n             {}
 <multi_line_comment>"*"+"/"        {BEGIN(INITIAL);}
 
 "//"                               {BEGIN(single_line_comment);}
 <single_line_comment>[^\n]+        {}               
-<single_line_comment>\n            {BEGIN(INITIAL);printf("Parsing line number %d:\n\n", yylineno);}
+<single_line_comment>\n            {BEGIN(INITIAL);}
 
 {ws}                    {}
-[\n]                    {
-                            printf("Parsing line number %d:\n\n", yylineno);
-                        }
+[\n]                    {}
 .                       {
                             printf("Invalid token: %s | syntax error detected at line number %d\n", yytext, yylineno);
                             return UNKNOWN;
                         }
-
