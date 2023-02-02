@@ -1,8 +1,8 @@
 # COMPILERS_LAB
 
 ## Group members : 
-## Swarup Padhi (20CS30062) 
-## Rounak Saha (20CS30043)
+### Swarup Padhi (20CS30062) 
+### Rounak Saha (20CS30043)
 
 **A1**:  
 Used github copilot along with extension x86_64 assembly code syntax highlighting on vscode for assignment 1
